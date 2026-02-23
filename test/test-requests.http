@@ -2,6 +2,8 @@
 ### use with: REST Client extension
 @apiurl = http://localhost:3000/api
 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJ1c2VybmFtZSI6ImJvYl9icm93biIsImVtYWlsIjoiYm9iQGV4YW1wbGUuY29tIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDEtMDVUMDU6NDU6MDAuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzcwNjQ0NzM5LCJleHAiOjE3NzA3MzExMzl9.IoSCORRVBKM5PhygnEP3JO3zr4YuHCpBvhDkp_AubOY
+
 ### GET all items
 GET {{apiurl}}/items
 
@@ -32,7 +34,7 @@ GET {{apiurl}}/users
 
 ########
 ###Get user by id:
-GET  {{apiurl}}/users/7
+GET  {{apiurl}}/users/9
 
 
 
@@ -41,9 +43,9 @@ POST {{apiurl}}/users
 Content-Type: application/json
 
 {
-  "username": "Kalle",
-  "password": "salasana",
-  "email": "jortikka@valtikka.com"
+  "username": "Malli1111331",
+  "password": "kallekei11jo",
+  "email": "testataan111111ff11aa@valitus.com"
 }
 
 ### Register new user FAIL (email missing)
@@ -55,15 +57,19 @@ Content-Type: application/json
   "password": "duck"
 }
 
-### User login
+### User login Tähän tehty salasanan tarkistus hashattyna. Tee tän mukaan omaan!!!!!!!!!!!
 POST {{apiurl}}/users/login
 Content-Type: application/json
 
 {
-  "username": "bob_brown",
-  "password": "hashed_password"
+  "username": "Malli1111331",
+  "password": "kallekei11jo"
 }
 
+
+### GET userinfo by token
+GET {{apiurl}}/users/me
+Authorization: Bearer {{token}}
 
 ### Diary entry endpoints
 
@@ -75,8 +81,8 @@ GET {{apiurl}}/entries/7
 
 ### post new entry
 POST {{apiurl}}/entries
+Authorization: Bearer {{token}}
 Content-Type: application/json
-
 {
   "user_id": 3,
   "entry_date": "2026-02-05",
@@ -85,4 +91,19 @@ Content-Type: application/json
   "sleep_hours": 7,
   "notes": "testikirjaus"
 
+}
+
+############### oma-kanta request
+GET {{apiurl}}/omakanta/stats/
+
+###############
+POST {{apiurl}}/omakanta/stats
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "calories_eaten": 1980,
+  "calories_used": 2377,
+  "steps": 17210,
+  "weight_today": 75.90
 }

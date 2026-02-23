@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import omakantaRouter from './routes/omakanta-router.js';
 import itemRouter from './routes/item-router.js';
 import userRouter from './routes/user-router.js';
 import requestLogger from './middlewares/logger.js';
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use('/', express.static('public'));
 // Oma loggeri middleware, käytössä koko sovelluksen laajuisesti eli käsittee kaikki http-pyynnöt
 app.use(requestLogger);
+
+app.use('/api/omakanta', omakantaRouter);
 
 
 

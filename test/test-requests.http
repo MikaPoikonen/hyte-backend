@@ -2,9 +2,7 @@
 ### use with: REST Client extension
 @apiurl = http://localhost:3000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJ1c2VybmFtZSI6ImJvYl9icm93biIsImVtYWlsIjoiYm9iQGV4YW1wbGUuY29tIiwiY3JlYXRlZF9hdCI6IjIwMjQtMDEtMDVUMDU6NDU6MDAuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzcwNjQ0NzM5LCJleHAiOjE3NzA3MzExMzl9.IoSCORRVBKM5PhygnEP3JO3zr4YuHCpBvhDkp_AubOY
-
-### GET all items
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwidXNlcm5hbWUiOiJtaWthdGVzdGkiLCJlbWFpbCI6InRlc3RpQHRlc3RpLmZpIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDItMjVUMjA6NDQ6MTkuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzcyMDkyOTk1LCJleHAiOjE3NzIxNzkzOTV9.T1HAB8HDejtwgnmGPr-Ggjs8mPVrIQ0QATNwmC33UJc
 GET {{apiurl}}/items
 
 ### GET item with id 1
@@ -28,7 +26,12 @@ Content-Type: application/json
 ##############################
 ### users endpoints
 
-### Get all users
+### Get all users (Fail without log in. Change token to muuttuja)
+GET {{apiurl}}/users
+Authorization: Bearer {{token}}
+
+
+### Get all users (Fail without token)
 GET {{apiurl}}/users
 
 
@@ -41,11 +44,12 @@ GET  {{apiurl}}/users/9
 ### Register new user
 POST {{apiurl}}/users
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "username": "Malli1111331",
-  "password": "kallekei11jo",
-  "email": "testataan111111ff11aa@valitus.com"
+  "username": "m",
+  "password": "testi12311",
+  "email": "testiaa11a@aaaaa.fi"
 }
 
 ### Register new user FAIL (email missing)
@@ -60,10 +64,11 @@ Content-Type: application/json
 ### User login Tähän tehty salasanan tarkistus hashattyna. Tee tän mukaan omaan!!!!!!!!!!!
 POST {{apiurl}}/users/login
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "username": "Malli1111331",
-  "password": "kallekei11jo"
+  "username": "bob_brown",
+  "password": "hashed_password"
 }
 
 
@@ -73,24 +78,32 @@ Authorization: Bearer {{token}}
 
 ### Diary entry endpoints
 
-### Get all entries
+### Get all entries (by user id tokenista)
 GET {{apiurl}}/entries
+Authorization: Bearer {{token}}
 
 ### Get entry by id //alempana laitetaan entry ja voi hakea viimeisimmällä tästä entrin
-GET {{apiurl}}/entries/7
+GET {{apiurl}}/entries/9
+
+### Delete entry by id
+DELETE {{apiurl}}/entries/8
+Authorization: Bearer {{token}}
+
+
+
 
 ### post new entry
 POST {{apiurl}}/entries
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
 {
-  "user_id": 3,
+  "user_id": 8,
   "entry_date": "2026-02-05",
   "mood": "Kipeä",
   "weight": 101,
   "sleep_hours": 7,
   "notes": "testikirjaus"
-
 }
 
 ############### oma-kanta request
@@ -101,9 +114,26 @@ POST {{apiurl}}/omakanta/stats
 Content-Type: application/json
 
 {
-  "user_id": 1,
-  "calories_eaten": 1980,
-  "calories_used": 2377,
-  "steps": 17210,
-  "weight_today": 75.90
+  "user_id": 16,
+  "calories_eaten": 3739,
+  "calories_used": 1690,
+  "steps": 7202,
+  "weight_today": 80.9
 }
+
+############################### omakanta Get Health stats
+GET {{apiurl}}/omakanta/stats/16
+Authorization: Bearer {{token}}
+
+### User login Tähän tehty salasanan tarkistus hashattyna. Tee tän mukaan omaan!!!!!!!!!!!
+POST {{apiurl}}/omakanta/stats/login
+Content-Type: application/json
+
+{
+  "username": "mika123",
+  "password": "kissa"
+}
+
+### GET userinfo by token
+GET {{apiurl}}/omakanta/stats/me
+Authorization: Bearer {{token}}

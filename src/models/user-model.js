@@ -23,6 +23,21 @@ const getUserById = async (id) =>{
     
   };
 
+ 
+  // hartaan kaikki käyttäjätiedot, mutta ei salasanaa. Tiedot voidaan hakea vaikka adminille, mutta ei saa hakea salasanaa.
+  const listAllUsers = async() => {
+    const sql = 'SELECT username, created_at FROM users';
+    const [rows] = await promisePool.query(sql);
+    return rows;
+  };
+
+
+
+
+
+
+
+
   const addUser = async (username,password,email) => {
     const sql = `INSERT INTO users(username,password,email) VALUES (?,?,?)`;
     const params = [username,password,email]
@@ -44,4 +59,4 @@ const [rows] = await promisePool.execute(sql,[username]);
 return rows[0]; //palautetaan taulukon eka rivi
 };
 
-export {findUserByUserName, getUsers,getUserById,addUser};
+export {findUserByUserName, getUsers,getUserById,addUser,listAllUsers};

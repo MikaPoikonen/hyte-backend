@@ -12,6 +12,18 @@ const listAllHealthyStats = async () => {
         }
     }
 
+const listAllHealthyStatsByUser = async (id) => {
+    try {
+        const sql = 'SELECT * FROM dailyhealthstats WHERE user_id = ?';
+        const result = await promisePool.execute(sql,[id]);
+        const rows = result[0];
+        return rows;
+    } catch(e) {
+        console.error('error', e.message);
+        return {error: e.message}
+    }
+}
+
 
 const addHealthyStats = async (entry) => 
 {
@@ -28,9 +40,17 @@ const addHealthyStats = async (entry) =>
     return {error: e.message};
   }
 };
+
+
+// Get user by id::
+const findUserByUserName = async (username) => {
+const sql = 'select * FROM users WHERE username = ?';
+const [rows] = await promisePool.execute(sql,[username]);
+return rows[0]; //palautetaan taulukon eka rivi
+};
     
 
 
 
 
- export {listAllHealthyStats,addHealthyStats};
+ export {listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserByUserName};

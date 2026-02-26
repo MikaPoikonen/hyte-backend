@@ -15,6 +15,7 @@ import {
   getUsers,
   getUserById,
   addUser,
+  listAllUsers,
 } from '../models/user-model.js'; //TODO: lisää tietokanta funktiot user modeliin
 // ja käytä niitä täällä!!!!!!!!!!!!!!!!!!!!
 
@@ -29,6 +30,15 @@ const getUsersController = async (req, res) => {
   }
 };
 
+
+const getUsersAll = async () => {
+  const users = await listAllUsers();
+  return users;
+};
+
+
+
+
 const getUSerByIdController = async (req, res) => {
   const entry = await getUserById(req.params.id);
   if (entry) {
@@ -39,24 +49,23 @@ const getUSerByIdController = async (req, res) => {
 };
 
 const postUser = async (req, res) => {
-  const {username, password, email} = req.body;
-
-  if (username && password && email) {
-    const hash = await bcrypt.hash(password, 10);
-    console.log('salasanatiiviste', hash);
+  const newUser = req.body;
 
     // Lähetetään hash tietokantaan salasanan sijaan
-    const result = await addUser(username, hash, email);
+    const hash = await bcrypt.hash(newUser.password, 10);
+   // 10 on suolan määrä, joka vaikuttaa hashauksen turvallisuuteen. Mitä suurempi, sitä turvallisempi mutta myös hitaampi.
+    newUser.password = hash;
+    const result = await addUser(newUser);
 
     if (result.user_id) {
       res.status(201).json({message: 'New user added.', ...result});
     } else {
       res.status(500).json(result);
-    }
-  } else {
-    res.sendStatus(400);
-  }
-};
+    }}
+  //} else {
+   // res.sendStatus(400);
+ // }
+//};
 
 // Käyttäjän lisäys (rekisteröityminen)
 //const postUser = (pyynto, vastaus) => {
@@ -108,4 +117,4 @@ const getMe = (req, res) => {
   res.json(req.user); //lisätään objekti authentication tiedostosta.
 };
 
-export {getUsersController, postUser, postLogin, getUSerByIdController, getMe};
+export {getUsersController, postUser, postLogin, getUSerByIdController, getMe,getUsersAll};

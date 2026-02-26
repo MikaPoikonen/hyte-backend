@@ -1,10 +1,22 @@
-import {listAllEntries, findEntryById, addEntry} from "../models/entry-model.js";//lisää omaan
+import {//listAllEntries, 
+findEntryById, addEntry,listAllEntriesByUser,
+removeEntryById} from "../models/entry-model.js";//lisää omaan
 
 
 //käyttää modelin listAllEntries();
 
+
+
+
+
+
 const getEntries = async (req, res) => {//tämänkin pitää olla asynkroninen //lisää omaan
-  const result = await listAllEntries();
+  //haetaan kaikkien käyttäjien merkinnät, mutta ei salasanaa. Tiedot voidaan hakea vaikka adminille, mutta ei saa hakea salasanaa.
+  //const result = await listAllEntries();
+  
+
+  //haetaan käyttäjän omat merkittät!
+  const result = await listAllEntriesByUser(req.user.user_id); //käyttäjään liittyvä tieto tokenista, joka on purettu authentication middlewareen ja lisätty http objektiin 
   if (!result.error) {
     res.json(result);
   } else {
@@ -48,9 +60,14 @@ const putEntry = (req, res) => {
   res.sendStatus(200);
 };
 
-const deleteEntry = (req, res) => {
-  // placeholder for future implementation
-  res.sendStatus(200);
-};
+const deleteEntry = async (req, res) => {
+  const affectedRows = await removeEntryById(req.params.id, req.user.user_id);
+  if (affectedRows > 0){
+    res.json({message: 'entry deleted'});
+  } else {
+    res.status(404).json({message: 'entry not found'});
+  }
+  };
+
 
 export {getEntries, getEntryById, postEntry, putEntry, deleteEntry};

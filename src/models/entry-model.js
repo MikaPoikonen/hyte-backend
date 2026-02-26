@@ -4,16 +4,35 @@ import promisePool from '../utils/database.js'; //importataan yhteys databaseen
 
 const listAllEntries = async () => {
   try {
-    //const [rows] = await promisePool.query('SELECT * FROM DiaryEntries');//kysely. await odottaa vastausta
-    const result = await promisePool.query('SELECT * FROM DiaryEntries'); //vaihtoehtoinen
-    const rows = result[0]; //vaihtoehtoinnen
-    //console.log('rows', rows);
-    return rows; //palautetaan muuttujan arvo
+    
+    const result = await promisePool.query('SELECT * FROM DiaryEntries');
+
+    const rows = result[0]; 
+    return rows; 
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
   }
 };
+
+
+// Haetaan kirjautuneen käyttäjäm id. Näkee vain omansa!!!!!!!!!!!!!!!!!
+const listAllEntriesByUser = async (id) => {
+  try {
+    
+    const sql = 'SELECT * FROM Diaryentries WHERE user_id = ?'; //käytetään execute kun halutaan ?(muuttuva parametri) tilalle laittaa  [id](listatut arvot) haetaan id:llä //sama promisebool/
+    const result = await promisePool.execute(sql,[id]); //käytetään execute kun halutaan ?(muuttuva parametri) tilalle laittaa  [id](listatut arvot) haetaan id:llä //sama promisebool/
+    
+    const rows = result[0]; 
+    return rows; 
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
+
+
+
 
 const findEntryById = async (id) => {
   try {
@@ -45,4 +64,14 @@ const addEntry = async (entry) => { //controlleriin entry  objekti
   }
 };
 
-export {listAllEntries, findEntryById, addEntry};
+
+const removeEntryById = async (entryId, userId) => {
+  const sql = 'DELETE FROM DiaryEntries WHERE entry_id = ? AND user_id = ?';
+  const result = await promisePool.execute(sql,[entryId,userId]);
+  return result.affectedRows; //palautetaan tieto siitä kuinka monta riviä on vaikuttanut. Eli jos 0, ei onnistunut, jos 1 onnistui
+}
+
+
+
+
+export {listAllEntries, findEntryById, addEntry,listAllEntriesByUser,removeEntryById};

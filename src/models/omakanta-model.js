@@ -1,5 +1,10 @@
 import promisePool from "../utils/database1.js";
 
+
+
+
+
+
 const listAllHealthyStats = async () => {
     try {
         const result = await promisePool.query('SELECT * FROM dailyhealthstats WHERE user_id = 1');
@@ -27,10 +32,10 @@ const listAllHealthyStatsByUser = async (id) => {
 
 const addHealthyStats = async (entry) => 
 {
-    const {user_id,calories_eaten,calories_used,steps,weight_today} = entry
-    const sql = `INSERT INTO dailyhealthstats (user_id,calories_eaten,calories_used,steps,weight_today)
-                VALUES(?,?,?,?,?)`;
-    const params = [user_id,calories_eaten,calories_used,steps,weight_today]
+    const {user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date} = entry
+    const sql = `INSERT INTO dailyhealthstats (user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date)
+                VALUES(?,?,?,?,?,?,?,?,?,?)`;
+    const params = [user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date]
     try {
     const rows = await promisePool.execute(sql, params);
     //console.log('rows', rows);

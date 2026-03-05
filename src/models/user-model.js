@@ -35,12 +35,10 @@ const getUserById = async (id) =>{
 
 
 
-
-
-
-  const addUser = async (username,password,email) => {
+ // käyttäjätiedot id:llä. Tiedot voidaan hakea vaikka adminille, mutta ei saa hakea salasanaa.
+  const addUser = async (user) => {
     const sql = `INSERT INTO users(username,password,email) VALUES (?,?,?)`;
-    const params = [username,password,email]
+    const params = [user.username,user.password,user.email]
     try {
       const rows = await promisePool.execute(sql,params);
       return rows[0].insertId;

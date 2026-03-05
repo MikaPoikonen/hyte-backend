@@ -43,11 +43,15 @@ CREATE TABLE dietplans (
 
 CREATE TABLE dailyhealthstats (
   stat_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
   calories_eaten INT NOT NULL,
   calories_used INT NOT NULL,
   steps INT NOT NULL,
   weight_today DECIMAL(5,2) NOT NULL,
+  entry_date DATE NOT NULL,
+  mood VARCHAR(50),
+  weight DECIMAL(5,2),
+  sleep_hours INT,
+  notes TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT fk_daily_stats_user

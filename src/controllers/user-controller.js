@@ -7,7 +7,7 @@
 // Importataan jwt kirjasto, joka on tarpeen tokenien luomiseen ja tarkistamiseen
 import jwt from 'jsonwebtoken';
 
-import bcrypt, {hash} from 'bcryptjs'; // tuodaan bcrypt kirjasto, joka on tarpeen salasanojen hashaukseen
+import bcrypt from 'bcryptjs'; // tuodaan bcrypt kirjasto, joka on tarpeen salasanojen hashaukseen
 
 //TODO: redaktoroi tietokanta funktiolle
 import {
@@ -48,20 +48,19 @@ const getUSerByIdController = async (req, res) => {
   }
 };
 
-const postUser = async (req, res) => {
-  const newUser = req.body;
 
-    // Lähetetään hash tietokantaan salasanan sijaan
-    const hash = await bcrypt.hash(newUser.password, 10);
-   // 10 on suolan määrä, joka vaikuttaa hashauksen turvallisuuteen. Mitä suurempi, sitä turvallisempi mutta myös hitaampi.
-    newUser.password = hash;
+//Post user login
+const postUser = async (req, res, next) => {
+  try {
+    const newUser = req.body;
+    newUser.password = await bcrypt.hash(newUser.password, 10);
+
     const result = await addUser(newUser);
-
-    if (result.user_id) {
-      res.status(201).json({message: 'New user added.', ...result});
-    } else {
-      res.status(500).json(result);
-    }}
+    res.status(201).json({message: 'New user added.', ...result});
+  } catch (err) {
+    next(err);
+  }
+};
   //} else {
    // res.sendStatus(400);
  // }

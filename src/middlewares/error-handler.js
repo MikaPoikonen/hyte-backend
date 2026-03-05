@@ -8,10 +8,6 @@ import {validationResult} from 'express-validator';
  * @returns 
  */
 
-
-
-
-
 const validationErrorHandler = (req, res, next) => {
   const errors = validationResult(req);
   console.log('validation errors', errors);
@@ -20,7 +16,40 @@ const validationErrorHandler = (req, res, next) => {
       .status(400)
       .json({message: 'invalid input data', errors: errors.array()});
   }
-  next();
+  next(); //seuraavalle middlewarella jos ei parametrille
+};
+/**
+ * default middleware for 404 request
+ * @param {*} req https request
+ * @param {*} res http response
+ * @param {*} next  for calling next function in middleware chain
+ * @returns 
+ */
+//siirretään err tätä alemmalle handlerille
+const notFoundHandler = (req, res, next) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  error.status = 404;
+  next(error); // forward error to error handler
+};
+/**
+* Custom default middleware for handling errors
+*/
+/**
+ * Middleware checking all input validation errors
+ * @param {*} req https request
+ * @param {*} res http response
+ * @param {*} next  for calling next function in middleware chain
+ * @returns 
+ */
+
+const errorHandler = (err, req, res, next) => {
+  res.status(err.status || 500); // default is 500 if err.status is not defined
+  res.json({
+    error: {
+      message: err.message,
+      status: err.status || 500
+    }
+  });
 };
 
-export {validationErrorHandler};
+export {validationErrorHandler,notFoundHandler,errorHandler};

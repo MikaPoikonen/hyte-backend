@@ -5,11 +5,6 @@ removeEntryById} from "../models/entry-model.js";//lisää omaan
 
 //käyttää modelin listAllEntries();
 
-
-
-
-
-
 const getEntries = async (req, res) => {//tämänkin pitää olla asynkroninen //lisää omaan
   //haetaan kaikkien käyttäjien merkinnät, mutta ei salasanaa. Tiedot voidaan hakea vaikka adminille, mutta ei saa hakea salasanaa.
   //const result = await listAllEntries();

@@ -103,19 +103,19 @@ erDiagram
 ## Kuvakaappaukset sovelluksen keskeisistä näkymistä selaimessa
 
 ### Etusivunäkymä
-![Etusivu](screenshots/index.png)
+![Etusivu](./Screenshots/index.png)
 
 ### Kirjautumis näkymä
-![Kirjautuminen](screenshots/login.png)
+![Kirjautuminen](./screenshots/login.png)
 
 ### Pääsivu/päiväkirjanäkymä
-![Päiväkirja](screenshots/paivakirja.png)
+![Päiväkirja](./screenshots/paivakirja.png)
 
 ### Merkinnän muokkaus
-![Muokkaus](screenshots/dialog.png)
+![Muokkaus](./screenshots/dialog.png)
 
 ### Bmi laskuri
-![Bmi](./docs/bmi.png)
+![Bmi](./screenshots/bmi.png)
 
 
 

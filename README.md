@@ -106,16 +106,16 @@ erDiagram
 ![Etusivu](./Screenshots/index.png)
 
 ### Kirjautumis näkymä
-![Kirjautuminen](./screenshots/login.png)
+![Kirjautuminen](./Screenshots/login.png)
 
 ### Pääsivu/päiväkirjanäkymä
-![Päiväkirja](./screenshots/paivakirja.png)
+![Päiväkirja](./Screenshots/paivakirja.png)
 
 ### Merkinnän muokkaus
-![Muokkaus](./screenshots/dialog.png)
+![Muokkaus](./Screenshots/dialog.png)
 
 ### Bmi laskuri
-![Bmi](./screenshots/bmi.png)
+![Bmi](./Screenshots/bmi.png)
 
 
 

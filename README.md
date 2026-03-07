@@ -112,7 +112,7 @@ erDiagram
 ![Päiväkirja](screenshots/paivakirja.png)
 
 ### Merkinnän muokkaus
-![Muokkaus](screenshots/dialog with update and delete stat.png)
+![Muokkaus](screenshots/dialog.png)
 
 ### Bmi laskuri
 ![Bmi](./docs/bmi.png)

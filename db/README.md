@@ -43,6 +43,58 @@ Sisältää käyttäjän päiväkirjamerkinnät.
 - `sleep_hours`
 - `notes`
 
+## Sovelluksen arkkitehtuuri
+
+Alla oleva kaavio kuvaa sovelluksen toimintalogiikkaa käyttäjän, frontendin, backendin ja tietokannan välillä.
+
+```mermaid
+%%{init: {'theme':'default'}}%%
+graph TD
+
+User[Käyttäjä] -->|Kirjautuminen| Frontend
+Frontend -->|Autentikaatio| Backend
+Backend -->|Tarkista käyttäjä| Database[(Tietokanta)]
+
+User -->|Lisää hyvinvointimerkintä| Frontend
+Frontend -->|POST /stats| Backend
+Backend -->|Tallenna data| Database
+
+Frontend -->|GET /stats/me| Backend
+Backend -->|Hae käyttäjän tiedot| Database
+Database -->|Palauta merkinnät| Backend
+Backend -->|JSON vastaus| Frontend
+
+Frontend -->|Näytä päiväkirja ja tilastot| User
+```
+
+
+### Tietokannat ja niiden yhteydet
+```mermaid
+erDiagram
+    USERS ||--o{ DAILYHEALTHSTATS : logs
+
+    USERS {
+        int user_id PK
+        varchar username
+        varchar password
+        varchar email
+        datetime created_at
+        varchar user_level
+    }
+
+    DAILYHEALTHSTATS {
+        int stat_id PK
+        int user_id FK
+        int calories_eaten
+        int calories_used
+        int steps
+        decimal weight_today
+        datetime created_at
+    }
+```
+
+
+
 
 ### Relaatiot
 - yhdellä käyttäjällä voi olla monta päiväkirjamerkintää
@@ -93,7 +145,9 @@ Lisäksi AI:n käyttö on merkitty tarpeen mukaan myös lähdekoodin kommentteih
 ## Linkit
 
 ### GitHub-repositorio
-Lisää tähän linkki repositorioosi.
+[Backend.](https://github.com/MikaPoikonen/hyte-backend/tree/backend-final)
+
+[Frontend.](https://github.com/MikaPoikonen/hyte-frontend/tree/frontend-final)
 
 ### Julkaistu sovellus
 Lisää tähän linkki julkaistuun sovellukseen, jos se on olemassa.

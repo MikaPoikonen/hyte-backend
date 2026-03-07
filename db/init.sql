@@ -1,5 +1,6 @@
 
 CREATE DATABASE harjoitus;
+USE harjoitus;
 
 CREATE TABLE users (
   user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -7,42 +8,12 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  role VARCHAR(20)
-);
-
-ALTER TABLE Users ADD COLUMN user_level VARCHAR(10) DEFAULT 'regular';
-
-CREATE TABLE diaryentries (
-  entry_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  entry_date DATE NOT NULL,
-  mood VARCHAR(50),
-  weight DECIMAL(5,2),
-  sleep_hours INT,
-  notes TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-  FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
-
-
-
-CREATE TABLE dietplans (
-  diet_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  target_calories INT NOT NULL,
-  target_weight DECIMAL(5,2) NOT NULL,
-  diet_started DATE NOT NULL,
-  diet_ends DATE,
-  days_in_diet INT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-  CONSTRAINT fk_dietplans_user
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+  user_level VARCHAR(10) DEFAULT 'regular'
 );
 
 CREATE TABLE dailyhealthstats (
   stat_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
   calories_eaten INT NOT NULL,
   calories_used INT NOT NULL,
   steps INT NOT NULL,
@@ -55,22 +26,22 @@ CREATE TABLE dailyhealthstats (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT fk_daily_stats_user
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
-INSERT INTO dietplans
-(user_id, target_calories, target_weight, diet_started, diet_ends, days_in_diet)
-VALUES
-(1, 2200, 75.00, '2026-01-01', '2026-03-01', 60),
-(2, 2000, 80.00, '2026-01-15', NULL, NULL);
 
 INSERT INTO dailyhealthstats
-(user_id, calories_eaten, calories_used, steps, weight_today)
+(user_id, calories_eaten, calories_used, steps, weight_today, entry_date, mood, weight, sleep_hours, notes)
 VALUES
-(1, 2300, 2600, 8500, 78.20),
-(1, 2100, 2400, 10500, 77.90),
-(2, 1950, 2100, 6500, 82.10),
-(2, 2050, 2000, 7200, 82.00);
+(1, 2300, 2600, 8500, 78.20, '2026-03-01', 'hyvä', 80.00, 7, 'Kevyt treeni ja iltakävely'),
+(1, 2100, 2400, 10500, 77.90, '2026-03-02', 'energinen', 80.00, 8, 'Juoksulenkki aamulla'),
+(1, 2500, 2300, 9000, 77.80, '2026-03-03', 'ok', 80.00, 6, 'Normaali työpäivä, vähän liikuntaa'),
+
+(2, 1950, 2100, 6500, 82.10, '2026-03-01', 'väsynyt', 84.00, 5, 'Huono yöuni'),
+(2, 2050, 2000, 7200, 82.00, '2026-03-02', 'parempi', 84.00, 7, 'Kävelylenkki illalla'),
+(2, 2200, 2150, 8000, 81.90, '2026-03-03', 'hyvä', 84.00, 8, 'Hyvä päivä ja paljon liikuntaa');
 
 
 SELECT d.*, u.username FROM users d

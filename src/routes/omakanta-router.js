@@ -5,6 +5,8 @@ import {
   getHealthStatsByUser,
   postLogin,
   getMe,
+  putStats,
+  deleteStats
 } from '../controllers/omakanta-contoller.js';
 import {authenticateToken} from '../middlewares/authentication.js';
 import {body} from 'express-validator';
@@ -22,9 +24,12 @@ omakantaRouter
     body('calories_used').trim().isLength({min: 0, max: 300000}).isNumeric(),
     validationErrorHandler,
     postHealthStats,
-  );
+  )
+  .put(validationErrorHandler,putStats)
+  .delete(authenticateToken,deleteStats)
 
-omakantaRouter.route('/stats/:id').get(authenticateToken, getHealthStatsByUser);
+omakantaRouter.route('/stats/:id').get(authenticateToken, getHealthStatsByUser)
+
 
 omakantaRouter.get('/stats/me', authenticateToken, getMe);
 

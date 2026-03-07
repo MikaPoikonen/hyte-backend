@@ -39,12 +39,43 @@ const addHealthyStats = async (entry) =>
     try {
     const rows = await promisePool.execute(sql, params);
     //console.log('rows', rows);
-    return {entry_id: rows[0].insertId}; //ollaan kiinnostuneita mikä on uusimman entrt_id numero. Eli juoksevan päiväkirjamerkinnän id
+    return {entry_id: rows[0].insertId}; //ollaan kiinnostuneita mik� on uusimman entrt_id numero. Eli juoksevan p�iv�kirjamerkinn�n id
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
   }
 };
+
+const putHealhtyStats = async (entry) => 
+{
+    const {user_id,stat_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date} = entry
+    const sql = `
+UPDATE dailyhealthstats 
+SET user_id = ?, 
+    calories_eaten = ?, 
+    calories_used = ?, 
+    steps = ?, 
+    weight_today = ?, 
+    mood = ?, 
+    weight = ?, 
+    sleep_hours = ?, 
+    notes = ?, 
+    entry_date = ?
+WHERE stat_id = ?`;
+    const params = [user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date,stat_id]
+    try {
+    const rows = await promisePool.execute(sql, params);
+    //console.log('rows', rows);
+    return {entry_id: rows[0].insertId}; //ollaan kiinnostuneita mik� on uusimman entrt_id numero. Eli juoksevan p�iv�kirjamerkinn�n id
+  } catch (e) {
+    console.error('error', e.message);
+    return {error: e.message};
+  }
+};
+
+
+
+
 
 
 // Get user by id::
@@ -53,9 +84,18 @@ const sql = 'select * FROM users WHERE username = ?';
 const [rows] = await promisePool.execute(sql,[username]);
 return rows[0]; //palautetaan taulukon eka rivi
 };
+
+
+
+// Delete one stat
+const deleteStat = async (stat_id, user_id) => {
+    const sql = 'DELETE FROM dailyhealthstats WHERE stat_id = ? AND user_id = ?';
+    const [result] = await promisePool.execute(sql, [stat_id, user_id]);
+    return result.affectedRows;
+};
     
 
 
 
 
- export {listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserByUserName};
+ export {listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserByUserName,putHealhtyStats,deleteStat};

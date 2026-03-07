@@ -1,4 +1,4 @@
-import { listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserByUserName } from "../models/omakanta-model.js";
+import { listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserByUserName,putHealhtyStats,deleteStat } from "../models/omakanta-model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -45,6 +45,46 @@ const postHealthStats = async(req,res) => {
   }
 };
 
+const putStats = async (req, res) => {
+  const {
+    user_id,
+    stat_id,
+    calories_eaten,
+    calories_used,
+    steps,
+    weight_today,
+    mood,
+    weight,
+    sleep_hours,
+    notes,
+    entry_date
+  } = req.body;
+
+  if (user_id && stat_id && calories_eaten && calories_used && steps && weight_today) {
+    const result = await putHealhtyStats({
+      user_id,
+      stat_id,
+      calories_eaten,
+      calories_used,
+      steps,
+      weight_today,
+      mood,
+      weight,
+      sleep_hours,
+      notes,
+      entry_date
+    });
+
+    if (!result.error) {
+      res.status(200).json({ message: 'Entry updated.', result });
+    } else {
+      res.status(500).json(result);
+    }
+  } else {
+    res.sendStatus(400);
+  }
+};
+
 
 const postLogin = async (req, res) => {
   const {username, password} = req.body;
@@ -76,6 +116,16 @@ const getMe = (req, res) => {
   res.json(req.user); //lisätään objekti authentication tiedostosta.
 }
 
+const deleteStats = async (req,res) => {
+
+  const result = await deleteStat(req.body.stat_id,req.user.user_id);
+  if (!result.error){
+    res.json(result)
+  } else {
+    res.status(500);
+    res.json(result)
+  }
+}
 
 
 
@@ -83,4 +133,6 @@ const getMe = (req, res) => {
 
 
 
-export {getAllHealthStats,postHealthStats,getHealthStatsByUser,postLogin,getMe};
+
+
+export {getAllHealthStats,postHealthStats,getHealthStatsByUser,postLogin,getMe,putStats,deleteStats};

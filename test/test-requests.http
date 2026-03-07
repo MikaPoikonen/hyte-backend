@@ -2,7 +2,7 @@
 ### use with: REST Client extension
 @apiurl = http://localhost:3000/api
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozMCwidXNlcm5hbWUiOiJtaWthbWV0cm9wb2xpYSIsImVtYWlsIjoibWlrYXBvaUBtZXRyb3BvbGlhLmZpIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDMtMDNUMDk6MzY6MDQuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzcyNjI4NzMzLCJleHAiOjE3NzI3MTUxMzN9.A8kpqEUI2kg8iv48IzdODM9Wywfm3y77yL9RBH2fUSg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMywidXNlcm5hbWUiOiJNaWthZmluYWwiLCJlbWFpbCI6ImZpbmFsQGZpbmFsLmZpIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDItMjdUMDk6MjM6NTcuMDAwWiIsInVzZXJfbGV2ZWwiOiJyZWd1bGFyIiwiaWF0IjoxNzcyOTAyMzM5LCJleHAiOjE3NzI5ODg3Mzl9.tDn8na6W1sXIP3IazigXHU-Rp8urzJWwIZXuI_OnGE4
 GET {{apiurl}}/items
 
 ### GET item with id 1
@@ -66,8 +66,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "username": "mikametropolia",
-  "password": "Aquamariinioy1"
+  "username": "mikafinal",
+  "password": "testi123"
 }
 
 
@@ -127,7 +127,7 @@ Authorization: Bearer {{token}}
 }
 
 ############################### omakanta Get Health stats
-GET {{apiurl}}/omakanta/stats/16
+GET {{apiurl}}/omakanta/stats/23
 Authorization: Bearer {{token}}
 
 ### User login Tähän tehty salasanan tarkistus hashattyna. Tee tän mukaan omaan!!!!!!!!!!!
@@ -135,10 +135,38 @@ POST {{apiurl}}/omakanta/stats/login
 Content-Type: application/json
 
 {
-  "username": "mika123",
-  "password": "kissa"
+  "username": "mikafinal",
+  "password": "testi123"
 }
 
 ### GET userinfo by token
 GET {{apiurl}}/omakanta/stats/me
 Authorization: Bearer {{token}}
+
+### Put dailystats by token  //TODO MODEL; ROUTER CONTROLLER
+PUT {{apiurl}}/omakanta/stats/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "user_id": 23,
+  "stat_id": 78,
+  "calories_eaten": 2250,
+  "entry_date": "2026-02-05",
+  "calories_used": 2300,
+  "steps": 7202,
+  "weight_today": 99,
+  "mood": "hyvä",
+  "weight": 103,
+  "sleep_hours": 8,
+  "notes": "Vielä on flunssan jälkitilaa. Vointi ei vielä paras ja vähän yskittää"
+}
+
+#########  Delete stat
+DELETE {{apiurl}}/omakanta/stats
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+"stat_id":82
+}

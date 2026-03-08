@@ -117,6 +117,9 @@ const getMe = (req, res) => {
   res.json(req.user); //lisätään objekti authentication tiedostosta.
 }
 
+
+//Delete controlleri. 
+// Tekoäly auttoi body parametrin kanssa. Oli ensin väärä ja ei toiminut siksi
 const deleteStats = async (req,res) => {
 
   const result = await deleteStat(req.body.stat_id,req.user.user_id);

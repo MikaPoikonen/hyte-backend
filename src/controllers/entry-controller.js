@@ -55,6 +55,8 @@ const putEntry = (req, res) => {
   res.sendStatus(200);
 };
 
+
+// Poisto controlleri
 const deleteEntry = async (req, res) => {
   const affectedRows = await removeEntryById(req.params.id, req.user.user_id);
   if (affectedRows > 0){

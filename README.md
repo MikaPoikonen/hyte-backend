@@ -115,6 +115,8 @@ Backend käyttää MariaDB-tietokantaa `harjoitus`, jossa taulut ovat:
 Taulu `dailyhealthstats` viittaa `users`-tauluun `user_id`-foreign keyllä.
 
 ### Tiedosto kaavio
+
+```mermaid
 flowchart LR
 
 subgraph Frontend
@@ -146,7 +148,6 @@ subgraph Database
     stats[(dailyhealthstats)]
 end
 
-
 index --> css
 login --> loginJS
 paivakirja --> diaryJS
@@ -167,6 +168,7 @@ userController --> users
 omakantaController --> stats
 
 stats -->|user_id| users
+```
 
 
 

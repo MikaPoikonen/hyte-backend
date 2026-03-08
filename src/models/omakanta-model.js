@@ -3,7 +3,7 @@ import promisePool from "../utils/database1.js";
 
 
 
-
+// ei käytössä, valmis buildi muuten ja mokkidatan testaamiseen
 
 const listAllHealthyStats = async () => {
     try {
@@ -17,6 +17,7 @@ const listAllHealthyStats = async () => {
         }
     }
 
+    //Haetaan statsit userid perusteella
 const listAllHealthyStatsByUser = async (id) => {
     try {
         const sql = 'SELECT * FROM dailyhealthstats WHERE user_id = ?';
@@ -29,7 +30,7 @@ const listAllHealthyStatsByUser = async (id) => {
     }
 }
 
-
+//  Tietokantaan sql lisäys annetuista tiedoista jotka tulee backendille
 const addHealthyStats = async (entry) => 
 {
     const {user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date} = entry
@@ -39,13 +40,15 @@ const addHealthyStats = async (entry) =>
     try {
     const rows = await promisePool.execute(sql, params);
     //console.log('rows', rows);
-    return {entry_id: rows[0].insertId}; //ollaan kiinnostuneita mik� on uusimman entrt_id numero. Eli juoksevan p�iv�kirjamerkinn�n id
+    return {entry_id: rows[0].insertId}; 
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
   }
 };
 
+
+// Tietokantaan päivitys tieoilla jotka tulevat html puolelta backiin.
 const putHealhtyStats = async (entry) => 
 {
     const {user_id,stat_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date} = entry
@@ -66,7 +69,7 @@ WHERE stat_id = ?`;
     try {
     const rows = await promisePool.execute(sql, params);
     //console.log('rows', rows);
-    return {entry_id: rows[0].insertId}; //ollaan kiinnostuneita mik� on uusimman entrt_id numero. Eli juoksevan p�iv�kirjamerkinn�n id
+    return {entry_id: rows[0].insertId}; 
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};
@@ -87,7 +90,7 @@ return rows[0]; //palautetaan taulukon eka rivi
 
 
 
-// Delete one stat
+// merkinnän poisto jos statid ja userid mätsäävät. HTML puolelta poistopyyntö avatusta dialogista
 const deleteStat = async (stat_id, user_id) => {
     const sql = 'DELETE FROM dailyhealthstats WHERE stat_id = ? AND user_id = ?';
     const [result] = await promisePool.execute(sql, [stat_id, user_id]);

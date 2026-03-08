@@ -39,9 +39,5 @@ userRouter.get('/:id', getUSerByIdController);
 // POST user login
 userRouter.post('/login', postLogin);
 
-// TODO: get user by id
-// app.get('/api/users/:id');
-// TODO: put user by id
-// TODO: delete user by id
 
 export default userRouter;

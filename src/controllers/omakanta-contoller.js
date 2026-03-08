@@ -2,7 +2,7 @@ import { listAllHealthyStats,addHealthyStats,listAllHealthyStatsByUser,findUserB
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-
+// kaikkien statsien contolleri
 const getAllHealthStats = async (req,res) => {
     const result = await listAllHealthyStats();
     if (!result.error){
@@ -14,7 +14,7 @@ const getAllHealthStats = async (req,res) => {
     }
 }
 
-
+// kaikki statsit user_id mukaan controlleri
 const getHealthStatsByUser = async (req,res) => {
 
   const result = await listAllHealthyStatsByUser(req.user.user_id);
@@ -28,7 +28,7 @@ const getHealthStatsByUser = async (req,res) => {
 
 
 
-
+// post controlleri statseille
 const postHealthStats = async(req,res) => {
     const {user_id,calories_eaten,calories_used,steps,weight_today,mood,weight,sleep_hours,notes,entry_date}=req.body;
     if (user_id && calories_eaten && calories_used && steps && weight_today){
@@ -45,6 +45,7 @@ const postHealthStats = async(req,res) => {
   }
 };
 
+// statsin päivityksen controlleri
 const putStats = async (req, res) => {
   const {
     user_id,
@@ -85,7 +86,7 @@ const putStats = async (req, res) => {
   }
 };
 
-
+// Login controlleri
 const postLogin = async (req, res) => {
   const {username, password} = req.body;
 

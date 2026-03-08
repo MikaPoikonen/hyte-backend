@@ -13,10 +13,11 @@ import {body} from 'express-validator';
 import {validationErrorHandler} from '../middlewares/error-handler.js';
 const omakantaRouter = express.Router();
 
+//validoinnit ja trimmit
 omakantaRouter
   .route('/stats')
   .get(getAllHealthStats)
-  //ToDO: add validators here
+  
   .post(
     body('weight_today').trim().isLength({min: 2, max: 400}).isNumeric(),
     body('steps').trim().isLength({min: 1, max: 300000}).isNumeric(),

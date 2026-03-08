@@ -1,0 +1,201 @@
+HYTE PROJEKTI – PALVELINKOMENNOT JA OSOITTEET
+
+--------------------------------------------------
+PALVELINOSOITTEET
+--------------------------------------------------
+
+Azure virtuaalikone (sovellus):
+https://mikapoihyte.norwayeast.cloudapp.azure.com
+
+SSH-yhteys palvelimelle:
+ssh mikapoi@mikapoihyte.norwayeast.cloudapp.azure.com
+
+Backend API (reverse proxyn kautta):
+https://mikapoihyte.norwayeast.cloudapp.azure.com/api/
+
+Frontend sivut:
+https://mikapoihyte.norwayeast.cloudapp.azure.com
+https://mikapoihyte.norwayeast.cloudapp.azure.com/login.html
+https://mikapoihyte.norwayeast.cloudapp.azure.com/rajapinnat/paivakirja.html
+
+
+--------------------------------------------------
+SSH YHTEYS PALVELIMELLE
+--------------------------------------------------
+
+ssh mikapoi@mikapoihyte.norwayeast.cloudapp.azure.com
+
+
+--------------------------------------------------
+KANSIOIDEN VAIHTAMINEN
+--------------------------------------------------
+
+Frontend projektiin:
+cd ~/hyte-frontend
+
+Backend projektiin:
+cd ~/hyte-backend
+
+Takaisin kotihakemistoon:
+cd ~
+
+Tiedostojen listaaminen:
+ls
+
+
+--------------------------------------------------
+FRONTENDIN BUILD JA JULKAISU
+--------------------------------------------------
+
+Siirry frontend projektiin:
+
+cd ~/hyte-frontend
+
+Buildaa frontend (Vite):
+
+npm run build
+
+Poista vanha julkaistu frontend:
+
+sudo rm -rf /var/www/html/*
+
+Kopioi uusi build Apachelle:
+
+sudo cp -r dist/* /var/www/html/
+
+
+--------------------------------------------------
+BACKENDIN KÄYNNISTYS
+--------------------------------------------------
+
+Siirry backend projektiin:
+
+cd ~/hyte-backend
+
+Käynnistä Node palvelin:
+
+node src/index.js
+
+TAI jos käytetään PM2:
+
+pm2 start src/index.js --name hyte-backend
+
+
+--------------------------------------------------
+BACKENDIN UUDELLEENKÄYNNISTYS
+--------------------------------------------------
+
+pm2 restart hyte-backend
+
+Backend prosessien tila:
+
+pm2 status
+
+Backend lokit:
+
+pm2 logs hyte-backend
+
+
+--------------------------------------------------
+API TESTAUS PALVELIMELLA
+--------------------------------------------------
+
+Testaa että backend vastaa:
+
+curl http://localhost:3000
+
+Testaa API endpoint:
+
+curl http://localhost:3000/api/omakanta/stats
+
+
+--------------------------------------------------
+GIT KOMENNOT
+--------------------------------------------------
+
+Repositoryn kloonaus:
+
+git clone https://github.com/MikaPoikonen/hyte-frontend
+
+tai backend:
+
+git clone https://github.com/MikaPoikonen/hyte-backend
+
+
+Branchin tarkistus:
+
+git branch
+
+Repositoryn tila:
+
+git status
+
+Päivitysten haku GitHubista:
+
+git pull
+
+
+--------------------------------------------------
+TIEDOSTOJEN HAKU PALVELIMELLA
+--------------------------------------------------
+
+Etsi tietty teksti projektista:
+
+grep -R "localhost:3000" src
+
+Etsi tietty elementti:
+
+grep -R "username" src
+
+Etsi scriptit HTML:stä:
+
+grep -n "script" rajapinnat/paivakirja.html
+
+
+--------------------------------------------------
+TIETOKANTA (MariaDB)
+--------------------------------------------------
+
+Kirjaudu MariaDB:
+
+sudo mysql -u root
+
+Tietokannan valinta:
+
+USE harjoitus;
+
+Taulujen lista:
+
+SHOW TABLES;
+
+Taulun sisältö:
+
+SELECT * FROM users;
+SELECT * FROM dailyhealthstats;
+
+
+--------------------------------------------------
+PALVELIMEN PÄIVITYKSET
+--------------------------------------------------
+
+Päivitä paketit:
+
+sudo apt update
+sudo apt upgrade
+
+
+--------------------------------------------------
+APACHE PALVELIN
+--------------------------------------------------
+
+Apache käynnistys:
+
+sudo systemctl start apache2
+
+Apache uudelleenkäynnistys:
+
+sudo systemctl restart apache2
+
+Apache tila:
+
+sudo systemctl status apache2

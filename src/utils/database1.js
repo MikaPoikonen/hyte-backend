@@ -1,6 +1,9 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
 
+
+
+// Käytetään yksilöprojektissa
 dotenv.config({ path: ".env.omakanta" });
 
 const pool = mysql.createPool({

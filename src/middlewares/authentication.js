@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
+// Autentikaatio ja token 
 const authenticateToken = (req, res, next) => {
   console.log('authenticateToken', req.headers);
   const authHeader = req.headers['authorization']; //haetaan authorization (token string test request BEARER)

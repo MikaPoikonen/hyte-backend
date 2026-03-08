@@ -93,6 +93,85 @@ erDiagram
     }
 ```
 
+## Sovelluksen rakenne
+
+Frontend koostuu useista HTML-sivuista ja niiden JavaScript-tiedostoista.  
+Frontend buildataan Vitellä, jonka jälkeen tuotetut tiedostot kopioidaan Apache-palvelimen webrootiin (`/var/www/html`).
+
+Apache palvelee frontendin staattiset tiedostot ja välittää kaikki `/api`-alkuiset pyynnöt Express-backendille reverse proxyn kautta.
+
+Backendissä `src/index.js` lataa reitit:
+- `user-router.js`
+- `omakanta-router.js`
+
+Reitit kutsuvat controllereita:
+- `user-controller.js`
+- `omakanta-contoller.js`
+
+Backend käyttää MariaDB-tietokantaa `harjoitus`, jossa taulut ovat:
+- `users`
+- `dailyhealthstats`
+
+Taulu `dailyhealthstats` viittaa `users`-tauluun `user_id`-foreign keyllä.
+
+### Tiedosto kaavio
+flowchart LR
+
+subgraph Frontend
+    index[index.html]
+    login[login.html]
+    paivakirja[paivakirja.html]
+
+    loginJS[src/js/login.js]
+    diaryJS[src/js/paivakirja.js]
+    apiJS[src/js/omakanta-api.js]
+
+    css[CSS tiedostot]
+end
+
+subgraph Backend
+    server[src/index.js]
+
+    userRouter[src/routes/user-router.js]
+    omakantaRouter[src/routes/omakanta-router.js]
+
+    userController[src/controllers/user-controller.js]
+    omakantaController[src/controllers/omakanta-contoller.js]
+
+    auth[middlewares/authentication.js]
+end
+
+subgraph Database
+    users[(users)]
+    stats[(dailyhealthstats)]
+end
+
+
+index --> css
+login --> loginJS
+paivakirja --> diaryJS
+
+diaryJS --> apiJS
+loginJS --> server
+apiJS --> server
+
+server --> userRouter
+server --> omakantaRouter
+
+userRouter --> userController
+omakantaRouter --> omakantaController
+
+omakantaRouter --> auth
+
+userController --> users
+omakantaController --> stats
+
+stats -->|user_id| users
+
+
+
+
+
 ### Referenssit ja kirjastot
 - Oppimisessa on käytettu Ulla Söderlöf ja Matti Peltoniemi Githubin opetusmateriaalia niin fron-endissä kuin back-endissä.
 - Oppimateriaalia on osittain käytetty suoraan ja myös muokattu projektiin sopivaksi

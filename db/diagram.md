@@ -1,3 +1,5 @@
+### Tietokantarakenne yksilöprojektissa joka on init.sql tiedostossa
+
 ```mermaid
 erDiagram
     USERS ||--o{ DAILYHEALTHSTATS : logs

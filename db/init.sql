@@ -1,4 +1,4 @@
-
+### Tietokannan komennot sen luomista varten
 CREATE DATABASE harjoitus;
 USE harjoitus;
 

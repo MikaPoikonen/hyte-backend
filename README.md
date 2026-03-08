@@ -152,7 +152,7 @@ Lisäksi AI:n käyttö on merkitty tarpeen mukaan myös lähdekoodin kommentteih
 [Frontend.](https://github.com/MikaPoikonen/hyte-frontend/tree/frontend-final)
 
 ### Julkaistu sovellus
-Lisää tähän linkki julkaistuun sovellukseen, jos se on olemassa.
+[Etusivu](https://mikapoihyte.norwayeast.cloudapp.azure.com/)
 
 ### Dokumentaatio
 Lisää tähän linkit mahdolliseen muuhun dokumentaatioon.

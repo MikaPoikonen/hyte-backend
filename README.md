@@ -93,6 +93,10 @@ erDiagram
     }
 ```
 
+### Referenssit ja kirjastot
+- Oppimisessa on käytettu Ulla Söderlöf ja Matti Peltoniemi Githubin opetusmateriaalia niin fron-endissä kuin back-endissä.
+- Oppimateriaalia on osittain käytetty suoraan ja myös muokattu projektiin sopivaksi
+- 
 
 
 
@@ -118,6 +122,64 @@ erDiagram
 ![Bmi](./Screenshots/bmi.png)
 
 
+### Käytetyt teknologiat
+
+### Projektissa on käytetty seuraavia teknologioita:
+
+- Node.js – palvelinpuolen JavaScript-ajoympäristö
+
+- Express.js – REST API -palvelimen toteutus
+
+- MariaDB / MySQL – tietokanta
+
+- Vite – frontend build-työkalu
+
+- Apache2 – web-palvelin Azure-virtuaalikoneella
+
+- JWT (JSON Web Token) – käyttäjän autentikointi
+
+- PM2 – Node.js-sovelluksen prosessien hallinta
+
+- Azure Virtual Machine (Ubuntu) – sovelluksen julkaisuympäristö
+
+- Käytetyt Node.js kirjastot
+
+### Backendissä käytetyt keskeiset kirjastot:
+
+- express – web framework Node.js:lle
+
+- mysql2 – yhteys MariaDB/MySQL-tietokantaan
+
+- jsonwebtoken – JWT-tokenien luominen ja tarkistus
+
+- bcrypt – salasanojen hashäys
+
+- dotenv – ympäristömuuttujien hallinta (.env)
+
+- express-validator – syötteiden validointi
+
+- cors – cross-origin pyyntöjen hallinta
+
+### Frontend kirjastot ja työkalut
+
+- Frontendissä käytetyt työkalut:
+
+- Vite – frontend build ja kehityspalvelin
+
+- JavaScript (ES Modules) – sovelluslogiikka
+
+- Fetch API – REST API -kutsut
+
+- HTML5 ja CSS3 – käyttöliittymä
+
+### Grafiikka ja media
+
+### Projektissa käytetty grafiikka on pääasiassa:
+
+- Itse tuotettua chatgpt
+
+- Kuvat on optimoitu web-käyttöön Vite buildin yhteydessä.
+
 
 ## Käytetyt lähteet
 
@@ -134,7 +196,7 @@ Sovelluksessa on hyödynnetty seuraavia lähteitä:
 ## AI:n hyödyntäminen
 
 Projektissa on hyödynnetty tekoälyä ohjelmoinnin tukena. Tekoälyä käytettiin esimerkiksi:
-- virheiden etsimiseen ja selittämiseen
+- virheiden etsimisen tukemiseen ja selittämiseen tarvittaessa miksi esim. koodi meni rikki.
 - SQL-kyselyiden tarkistamiseen
 - frontend- ja backend-koodin yhteentoimivuutta put ja delete lisäyksissä
 - erilaisten css ulkoasujen vinkkaukseen
@@ -143,6 +205,8 @@ Projektissa on hyödynnetty tekoälyä ohjelmoinnin tukena. Tekoälyä käytetti
 Tekoäly ei tuottanut valmista projektia kokonaan, vaan sitä käytettiin oppimisen tukena ja yksittäisten ongelmien ratkaisemiseen.
 
 Lisäksi AI:n käyttö on merkitty tarpeen mukaan myös lähdekoodin kommentteihin.
+
+Ai:lla luotu bannerikuva juoksija nainen
 
 ## Linkit
 
@@ -155,4 +219,12 @@ Lisäksi AI:n käyttö on merkitty tarpeen mukaan myös lähdekoodin kommentteih
 [Etusivu](https://mikapoihyte.norwayeast.cloudapp.azure.com/)
 
 ### Dokumentaatio
-Lisää tähän linkit mahdolliseen muuhun dokumentaatioon.
+[Express.js](https://expressjs.com)
+[Node.js](https://nodejs.org/en/docs)
+[mariaDB](https://mariadb.com/docs)
+[JSON Web Token](https://jwt.io/introduction)
+[Express Validator](https://express-validator.githyb.io/docs/)
+[Vite](https://vitejs.dev/guide/)
+[Apache Web Server](https://httpd.apache.org/docs/)
+[Azure Virtual Machine](https://learn.microsoft.com/en-us/azure/virtual-machines/)
+[Let's Encrypt / Certbot](https://certbot.eff.org/)
